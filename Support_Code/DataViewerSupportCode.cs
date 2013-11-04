@@ -64,7 +64,12 @@ namespace ExcelEditor
                         newLabel.Text = excelFileData[temp];
 
                         newTextBox.Name = "textBox" + excelFileData[temp];
-                        newTextBox.Text = "You can search here";                                                
+                        
+
+                        newTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                        newTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+                        newTextBox.AutoCompleteCustomSource.AddRange(excelFileActualData[excelFileData[temp]]);
                     }
                     newLabel.Location = new Point(100 * titleCount + 20 * (titleCount+1) + centerAlignment, 30);
                     newLabel.Font = font;
@@ -88,8 +93,12 @@ namespace ExcelEditor
 
         internal void cleanUpTheDataStructures()
         {
-
             excelFileData.Clear();
+        }
+
+        internal void PopulateAutoCompleteTextbox(TextBox autoCompleteTextbox, string inputKey)
+        {                                                     
+            autoCompleteTextbox.AutoCompleteCustomSource.AddRange(excelFileActualData[inputKey]);
         }
 
         internal void ParseDataFromExcelFile(string excelFileName)
@@ -103,6 +112,7 @@ namespace ExcelEditor
             string str;
             int rCnt = 0;
             int cCnt = 0;
+            int rowsCount = 0;
 
             excelApp = new Excel.ApplicationClass();
             excelWorkbook = excelApp.Workbooks.Open(excelFileName, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
@@ -119,13 +129,20 @@ namespace ExcelEditor
                  excelFileData.Add("Title" + cCnt.ToString(), str);                 
             }
             
+            rowsCount = range.Rows.Count;
+
             for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
-            {                
+            {           
+                string[] tempData = new string[rowsCount];
+
                 for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
                 {                 
                     str = (range.Cells[rCnt, cCnt] as Excel.Range).Value2.ToString();
-                    MessageBox.Show(str);
+                    tempData[rCnt-2] = str;
                 }
+                str = (range.Cells[1, cCnt] as Excel.Range).Value2.ToString();
+                if (excelFileActualData.ContainsKey(str) == false)
+                   excelFileActualData.Add(str, tempData);
             }
 
             excelWorkbook.Close(true, null, null);
@@ -134,10 +151,10 @@ namespace ExcelEditor
 
             ReleaseObject(excelWorksheet);
             ReleaseObject(excelWorkbook);
-            ReleaseObject(excelApp);            
-
-            
+            ReleaseObject(excelApp);                        
 
         }
+
+
     }
 }

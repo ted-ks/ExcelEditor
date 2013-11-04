@@ -24,3 +24,12 @@ D:\projects\ExcelEditor.cs\ExcelEditor\bin\Debug\ExcelEditor.pdb
 D:\projects\ExcelEditor.cs\ExcelEditor\obj\Debug\ExcelEditor.Properties.Resources.resources
 D:\projects\ExcelEditor.cs\ExcelEditor\obj\Debug\ExcelEditor.FileSelector.resources
 D:\projects\ExcelEditor.cs\ExcelEditor\obj\Debug\ExcelEditor.csproj.GenerateResource.Cache
+D:\projects\ExcelEditor\bin\Debug\ExcelEditor.exe.config
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.csproj.ResolveComReference.cache
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.exe
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.pdb
+D:\projects\ExcelEditor\bin\Debug\ExcelEditor.exe
+D:\projects\ExcelEditor\bin\Debug\ExcelEditor.pdb
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.Properties.Resources.resources
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.FileSelector.resources
+D:\projects\ExcelEditor\obj\Debug\ExcelEditor.csproj.GenerateResource.Cache

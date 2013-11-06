@@ -33,3 +33,12 @@ D:\projects\ExcelEditor\bin\Debug\ExcelEditor.pdb
 D:\projects\ExcelEditor\obj\Debug\ExcelEditor.Properties.Resources.resources
 D:\projects\ExcelEditor\obj\Debug\ExcelEditor.FileSelector.resources
 D:\projects\ExcelEditor\obj\Debug\ExcelEditor.csproj.GenerateResource.Cache
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\bin\Debug\ExcelEditor.exe.config
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.csproj.ResolveComReference.cache
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.exe
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.pdb
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\bin\Debug\ExcelEditor.exe
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\bin\Debug\ExcelEditor.pdb
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.Properties.Resources.resources
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.FileSelector.resources
+C:\Users\vishnu.k_s\Documents\GitHub\ExcelEditor\obj\Debug\ExcelEditor.csproj.GenerateResource.Cache

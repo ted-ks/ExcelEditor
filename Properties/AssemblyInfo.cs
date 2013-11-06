@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExcelEditor.cs")]
+[assembly: AssemblyTitle("ExcelEditor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Atmel Corporation")]
-[assembly: AssemblyProduct("ExcelEditor.cs")]
+[assembly: AssemblyProduct("ExcelEditor")]
 [assembly: AssemblyCopyright("Copyright © Atmel Corporation 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

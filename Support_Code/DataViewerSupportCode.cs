@@ -8,6 +8,9 @@ using System.ComponentModel;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
+using ExcelEditor;
+
+
 
 namespace ExcelEditor
 {
@@ -17,6 +20,8 @@ namespace ExcelEditor
         public static Dictionary<string, string> excelFileData = new Dictionary<string, string>();
 
         public static Dictionary<string, string[]> excelFileActualData = new Dictionary<string, string[]>();
+
+        public static ErrorManager ErrorMangerDataViewer = new ErrorManager();
 
         private static void ReleaseObject(Object obj)
         {
@@ -51,24 +56,31 @@ namespace ExcelEditor
             int index;
             
             index = Array.IndexOf(excelFileActualData[name], value);
-            
+
             if (index > -1)
             {
-                
+
                 for (var i = 1; i <= titleCount; i++)
                 {
-                    
+
                     TextBox tbx = Controls.Find("Textbox" + excelFileData["Title" + i.ToString()], true).FirstOrDefault() as TextBox;
-                    
+
                     if (tbx != null)
                     {
-                        
+
                         tbx.Text = excelFileActualData[excelFileData["Title" + i.ToString()]][index];
+                    }
+                    else
+                    {
+                        ErrorManager.ErrorNotification("GENERAL", "Textbox named Textbox" + excelFileData["Title" + i.ToString()] + " not present in form");
                     }
 
 
-
                 }
+            }
+            else
+            {
+                ErrorManager.ErrorNotification("GENERAL", value + " key not present in excelFileActualData[\"" + name +"\"]");
             }
 
         }
@@ -77,12 +89,13 @@ namespace ExcelEditor
         {
             TextBox textBox = sender as TextBox;
 
-            string value = textBox.Text;
 
-            
+
+
 
             if (textBox != null)
             {
+                string value = textBox.Text;
                 bool flag = CheckPossibleValueInTheTable(textBox.Name, value);
 
                 if (flag == true)
@@ -93,15 +106,26 @@ namespace ExcelEditor
                 {
                     clearTextBoxes();
                 }
-                
+
             }
+            else
+            {
+                ErrorManager.ErrorNotification("NULL", textBox);
+            }
+
+
+
         }
 
         public void SelectTextInTextBox(object obj, EventArgs e)
         {
             TextBox textBox = obj as TextBox;
 
-            textBox.SelectAll();
+            if (textBox != null)
+                textBox.SelectAll();
+            else
+                ErrorManager.ErrorNotification("NULL", "textBox");
+            
         }
 
         internal void clearTextBoxes()
@@ -221,6 +245,8 @@ namespace ExcelEditor
             string str;
             int rCnt = 0;
             int cCnt = 0;
+            int flag = 0;
+            int cFlag = 0;
             int rowsCount = 0;
 
             excelApp = new Excel.ApplicationClass();
@@ -229,26 +255,62 @@ namespace ExcelEditor
 
             range = excelWorksheet.UsedRange;
 
-            excelFileData.Add("TitlesCount", range.Columns.Count.ToString());            
+            excelFileData.Add("TitlesCount", range.Columns.Count.ToString());
 
-            
+            MessageBox.Show(range.Columns.Count.ToString());
+
             for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
             {
-                 str = (range.Cells[1, cCnt] as Excel.Range).Value2.ToString();
-                 excelFileData.Add("Title" + cCnt.ToString(), str);                 
+                object strObject = (range.Cells[1, cCnt] as Excel.Range).Value2;
+                if (strObject != null)
+                {
+                    str = strObject.ToString();
+                    excelFileData.Add("Title" + cCnt.ToString(), str);
+                    flag = 0;
+                }
+                else
+                {
+                    flag = (flag << 1) | 1;
+                    ErrorManager.ErrorNotification("GENERAL", "Something Weird is going on, Not debugged Yet");
+                    if (flag == 3)
+                    {
+                       // MessageBox.Show("Skipping remaining columns as 3 null columns are encountered consecutively");
+                        break;
+                    }
+                }
             }
             
             rowsCount = range.Rows.Count;
+            
 
+            MessageBox.Show(range.Columns.Count.ToString() + "   " + range.Rows.Count.ToString());
             for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
-            {           
+            {
+                flag = 0;
                 string[] tempData = new string[rowsCount-1];
 
                 for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
-                {                 
-                    str = (range.Cells[rCnt, cCnt] as Excel.Range).Value2.ToString();
-                    tempData[rCnt-2] = str;
+                {
+                    object strObject = (range.Cells[rCnt, cCnt] as Excel.Range).Value2;
+                    if (strObject != null)
+                    {
+                        str = strObject.ToString();
+                        tempData[rCnt - 2] = str;
+                        flag = 0;
+                    }
+                    else
+                    {
+                        flag = (flag << 1) | 1;
+                        tempData[rCnt - 2] = "<Null Data>";
+                        if (flag >= 3)
+                        {
+                            //MessageBox.Show("Skipping remaining columns as 3 null columns are encountered consecutively");
+                            break;
+                        }
+                    }                                    
                 }
+
+
                 str = (range.Cells[1, cCnt] as Excel.Range).Value2.ToString();
                 if (excelFileActualData.ContainsKey(str) == false)
                    excelFileActualData.Add(str, tempData);
